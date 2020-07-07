@@ -22,6 +22,9 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
+        self.min_capacity = MIN_CAPACITY
+        self.buckets = [None] * capacity
+        self.size = 0
 
 
     def get_num_slots(self):
@@ -35,6 +38,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return len(self.buckets)
 
 
     def get_load_factor(self):
@@ -54,6 +58,11 @@ class HashTable:
         """
 
         # Your code here
+        hash = 14695981039346656037
+        for i in key:
+            hash = hash * 1099511628211
+            hash = hash ^ ord(i)
+        return hash
 
 
     def djb2(self, key):
@@ -63,6 +72,10 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        hash = 5381
+        for i in key:
+            hash = ((hash << 5) + hash) + ord(i)
+        return hash & 0xFFFFFFFF
 
 
     def hash_index(self, key):
@@ -70,8 +83,8 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        # return self.fnv1(key) % self.get_num_slots()
+        return self.djb2(key) % self.get_num_slots()
 
     def put(self, key, value):
         """
@@ -81,7 +94,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        hash_key = self.hash_index(key)
+        self.buckets[hash_key] = value
 
 
     def delete(self, key):
@@ -93,6 +107,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        hash_key = self.hash_index(key)
+        self.buckets[hash_key] = None
 
 
     def get(self, key):
@@ -104,7 +120,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        hash_key = self.hash_index(key)
+        return self.buckets[hash_key]
 
     def resize(self, new_capacity):
         """
@@ -141,7 +158,7 @@ if __name__ == "__main__":
 
     # Test resizing
     old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
+    ht.resize(ht.size * 2)
     new_capacity = ht.get_num_slots()
 
     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
