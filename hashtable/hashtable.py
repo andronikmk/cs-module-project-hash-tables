@@ -25,6 +25,7 @@ class HashTable:
         self.min_capacity = MIN_CAPACITY
         self.buckets = [None] * capacity
         self.size = 0
+        self.lf = 0
 
 
     def get_num_slots(self):
@@ -48,7 +49,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        return self.lf
 
     def fnv1(self, key):
         """
@@ -94,8 +95,27 @@ class HashTable:
 
         Implement this.
         """
+        # Day 1    
+        # hash_key = self.hash_index(key)
+        # self.buckets[hash_key] = value
+
+        # Day 2
         hash_key = self.hash_index(key)
-        self.buckets[hash_key] = value
+        if self.buckets[hash_key] is None:
+            self.buckets[hash_key] = HashTableEntry(key, value)
+            self.size += 1
+
+        else:
+            node = self.buckets[hash_key]
+            print(node)
+            while node.key != key and node.next is not None:
+                node = node.next
+
+            if node.key == key:
+                node.value = value
+            else:
+                node.next = HashTableEntry(key, value)
+                self.size += 1
 
 
     def delete(self, key):
@@ -106,10 +126,11 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-        hash_key = self.hash_index(key)
-        self.buckets[hash_key] = None
-
+        # Day 1
+        # hash_key = self.hash_index(key)
+        # self.buckets[hash_key] = None
+        
+        # Day 2
 
     def get(self, key):
         """
