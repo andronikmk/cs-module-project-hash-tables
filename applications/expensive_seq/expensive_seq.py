@@ -3,6 +3,9 @@ expensive_sequence = {}
 
 def expensive_seq(x, y, z):
     # Your code here
+    # if x, y and z already ex. in cache return cache at the key.
+    if (x, y, z) in expensive_sequence:
+        return expensive_sequence[(x, y, z)]
     if x <= 0: 
         return y + z
     if x > 0:

@@ -22,14 +22,21 @@ def slowfun(x, y):
     output, but completes quickly instead of taking ages to run.
     """
     # slow 1: takes even slower
-    # lookup_table[i] = slowfun_too_slow(x, y)
+    if (x, y) in lookup_table:
+        return lookup_table[(x, y)]
+    else:
+        lookup_table[(x, y)] = slowfun_too_slow(x, y)
+        return lookup_table[(x, y)]
+    
+    
+    
     
     # slow 2: even slower 2
-    lookup_table[i] = math.pow(x, y)
-    lookup_table[i] = math.factorial(lookup_table[i])
-    lookup_table[i] //= (x+y)
-    lookup_table[i] %= 982451653
-    return lookup_table[i]
+    # lookup_table[i] = math.pow(x, y)
+    # lookup_table[i] = math.factorial(lookup_table[i])
+    # lookup_table[i] //= (x+y)
+    # lookup_table[i] %= 982451653
+    # return lookup_table[i]
 
     # slow 3
     # v = math.pow(x, y)
