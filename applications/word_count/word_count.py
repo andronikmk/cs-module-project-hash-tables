@@ -2,16 +2,19 @@ def word_count(s):
     # Your code here
     freq = {}
     for piece in s.lower().split():
-        word = ''.join(c for c in piece if c.isalpha())
+        word = ''.join(c for c in piece if c.isalpha() or c =="'")
         if word:
             freq[word] = 1 + freq.get(word, 0)
+    print(freq)
+    return freq
+    
     max_word = ''
     max_count = 0
     for (w,c) in freq.items():
         if c > max_count:
             max_word = w
             max_count = c
-        return w, c
+        
 
 
 
